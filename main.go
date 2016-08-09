@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
+	"github.com/maddyonline/fluent/runner"
 )
 
 func main() {
-	fmt.Println("hello")
+	runner.Main()
 }

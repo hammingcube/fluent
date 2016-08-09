@@ -1,4 +1,4 @@
-package main
+package runner
 
 import (
 	"encoding/json"
@@ -28,7 +28,7 @@ type Result struct {
 	Error  string `json:"error"`
 }
 
-func main() {
+func Main() {
 	payload := &Payload{}
 	err := json.NewDecoder(os.Stdin).Decode(payload)
 
