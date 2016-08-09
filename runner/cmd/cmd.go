@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"bytes"
+	"os"
 	"os/exec"
 	"strings"
 )
@@ -10,7 +11,9 @@ func Run(workDir string, args ...string) (string, string, error) {
 	return RunStdin(workDir, "", args...)
 }
 
-func RunStdin(workDir, stdin string, args ...string) (string, string, error) {
+var RunStdin func(string, string, ...string) (string, string, error)
+
+func BlockRunStdin(workDir, stdin string, args ...string) (string, string, error) {
 	var stdout bytes.Buffer
 	var stderr bytes.Buffer
 
@@ -22,6 +25,16 @@ func RunStdin(workDir, stdin string, args ...string) (string, string, error) {
 	err := cmd.Run()
 
 	return stdout.String(), stderr.String(), err
+}
+
+func StreamRunStdin(workDir, stdin string, args ...string) (string, string, error) {
+	cmd := exec.Command(args[0], args[1:]...)
+	cmd.Dir = workDir
+	cmd.Stdin = strings.NewReader(stdin)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err := cmd.Run()
+	return "", "", err
 }
 
 func RunBash(workDir, command string) (string, string, error) {

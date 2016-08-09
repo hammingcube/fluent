@@ -1,6 +1,7 @@
 package runner
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/maddyonline/fluent/runner/cmd"
@@ -28,7 +29,7 @@ type Result struct {
 	Error  string `json:"error"`
 }
 
-func Main() {
+func Run() string {
 	payload := &Payload{}
 	err := json.NewDecoder(os.Stdin).Decode(payload)
 
@@ -62,7 +63,7 @@ func Main() {
 		workDir := filepath.Dir(filepaths[0])
 		stdout, stderr, err = cmd.RunBashStdin(workDir, payload.Command, payload.Stdin)
 	}
-	printResult(stdout, stderr, err)
+	return printResult(stdout, stderr, err)
 }
 
 // Writes files to disk, returns list of absolute filepaths
@@ -112,13 +113,21 @@ func exitF(format string, a ...interface{}) {
 	os.Exit(1)
 }
 
-func printResult(stdout, stderr string, err error) {
+const DEFAULT_OUT_STR = `{"stdout": "", "stderr": "", "error": "%s"}`
+
+func printResult(stdout, stderr string, err error) string {
 	result := &Result{
 		Stdout: stdout,
 		Stderr: stderr,
 		Error:  errToStr(err),
 	}
-	json.NewEncoder(os.Stdout).Encode(result)
+	var outStr bytes.Buffer
+	err = json.NewEncoder(&outStr).Encode(result)
+	if err != nil {
+		return fmt.Sprintf(DEFAULT_OUT_STR, err.Error())
+	} else {
+		return outStr.String()
+	}
 }
 
 func errToStr(err error) string {
