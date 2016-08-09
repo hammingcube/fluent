@@ -1,10 +1,12 @@
-# Fluent -- a fork of prasmussen/glot-code-runner
+# Fluent -- a fork of [prasmussen/glot-code-runner](https://github.com/prasmussen/glot-code-runner)
 
 Main differences: 
 1. It is "go get"-able 
 2. Adds a streaming mode
 
-1. Default mode
+
+#### Default mode
+
 ```sh
 cat example.json  | fluent
 ```
@@ -14,7 +16,8 @@ Output is produced after completion
 
 ```
 
-2. Stream mode
+#### Stream mode
+
 ```sh
 
 cat example.json  | fluent --stream
@@ -25,5 +28,5 @@ Output is streamed
 2
 ```
 
-
-Note: This is a hand-crafted fork and makes use of `go generate`.
+### Note
+This is a hand-crafted fork and makes use of `go generate`.
