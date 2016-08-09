@@ -1,7 +1,8 @@
 # Fluent -- a fork of [prasmussen/glot-code-runner](https://github.com/prasmussen/glot-code-runner)
 
-Main differences: 
-1. It is "go get"-able 
+Main differences:
+
+1. It is "go get"-able
 2. Adds a streaming mode
 
 
