@@ -27,3 +27,11 @@ Output is streamed
 
 
 Note: This is a hand-crafted fork and makes use of `go generate`.
+
+
+
+# NOTES
+
+```
+docker run --rm -it -v $PWD:/go/bin -e GOPATH=/go -w /go/src/app golang go get -v github.com/maddyonline/fluent
+```
