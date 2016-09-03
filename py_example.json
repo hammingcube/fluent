@@ -1,0 +1,10 @@
+{
+  "language": "python",
+  "stdin": "42",
+  "files": [
+    {
+      "name": "main.py",
+      "content": "print(input('Number from stdin: '))"
+    }
+  ]
+}
